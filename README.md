@@ -10,6 +10,7 @@ The architecture of this project is driven by a commitment to the SOLID principl
 
 * **Single Responsibility Principle (SRP):** Each class in the application has one, and only one, reason to change.
     * The `Book` class only represents the data.
+    * The `Genre` enum provides type-safe genre values (FICTION, NON_FICTION).
     * The `DatasetReader` only reads and parses the CSV file.
     * The `InMemoryBookRepository` only executes queries against the in-memory data.
     * The `BookApp` only handles the console user interface and interaction logic.
@@ -42,13 +43,30 @@ BookInterface/
 │           │   ├── BookReader.java
 │           │   └── DatasetReader.java
 │           ├── model/
-│           │   └── Book.java
+│           │   ├── Book.java
+│           │   └── Genre.java
 │           ├── repository/
 │           │   ├── IBookRepository.java
 │           │   └── InMemoryBookRepository.java
 │           ├── BookApp.java
 │           └── Main.java
 └── bin/
+
+***
+
+## Model Enhancements
+
+### Genre Enum
+The application uses a `Genre` enum instead of plain strings for book genres, providing:
+* **Type Safety:** Ensures only valid genre values (FICTION, NON_FICTION) can be used
+* **Compile-time Checking:** Prevents invalid genre assignments at compile time
+* **Consistent Representation:** Centralized handling of genre string parsing and formatting
+* **Extensibility:** Easy to add new genres by simply adding enum values
+
+The `Genre.fromString()` method handles various string formats from the CSV data:
+- "Fiction" → `Genre.FICTION`
+- "Non Fiction" → `Genre.NON_FICTION`
+- Also supports variations like "nonfiction" and "non-fiction"
 
 ***
 

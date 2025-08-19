@@ -1,6 +1,7 @@
 package com.BookInterface.utils;
 
 import com.BookInterface.model.Book;
+import com.BookInterface.model.Genre;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -36,11 +37,14 @@ public class DatasetReader implements BookReader {
                         int reviews = Integer.parseInt(values[3]);
                         int price = Integer.parseInt(values[4]);
                         int year = Integer.parseInt(values[5]);
-                        String genre = values[6];
+                        String genreStr = values[6];
+                        Genre genre = Genre.fromString(genreStr);
 
                         books.add(new Book(title, author, userRating, reviews, price, year, genre));
                     } catch (NumberFormatException e) {
                         System.err.println("Skipping malformed line (number format error): " + line);
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Skipping malformed line (invalid genre): " + line);
                     }
                 }
             }

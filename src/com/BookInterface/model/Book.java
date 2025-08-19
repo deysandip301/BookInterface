@@ -9,9 +9,9 @@ public class Book {
     private final int reviews;
     private final int price;
     private final int year;
-    private final String genre;
+    private final Genre genre;
 
-    public Book(String title, String author, double userRating, int reviews, int price, int year, String genre) {
+    public Book(String title, String author, double userRating, int reviews, int price, int year, Genre genre) {
         this.title = title;
         this.author = author;
         this.userRating = userRating;
@@ -45,7 +45,7 @@ public class Book {
         return year;
     }
 
-    public String getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
