@@ -31,6 +31,7 @@ The architecture of this project is driven by a commitment to the SOLID principl
 
 ## Project Structure
 
+```
 BookInterface/
 ├── data/
 │   └── book_data.csv
@@ -51,6 +52,7 @@ BookInterface/
 │           ├── BookApp.java
 │           └── Main.java
 └── bin/
+```
 
 ***
 
@@ -86,8 +88,20 @@ The `Genre.fromString()` method handles various string formats from the CSV data
 ## Features
 
 The application provides a command-line menu to perform the following operations based on the dataset:
+
 * Count the total number of books written by a specific author.
 * Display a list of all unique authors in the dataset.
 * List the names of all books written by a specific author.
 * List all books that have a specific user rating.
 * List the names and prices of all books by a specific author.
+* **NEW:** List unique book titles by an author (eliminates duplicates from different years).
+* **NEW:** List unique books with a specific rating (eliminates duplicates from different years).
+
+### Handling Duplicate Books
+
+The dataset contains books that appeared as bestsellers in multiple years. The application now provides both regular search functionality and unique search options:
+
+* **Regular searches** (options 3-5): Show all book entries, including duplicates from different years
+* **Unique searches** (options 6-7): Show only one entry per unique book (title + author combination), selecting the most recent year when duplicates exist
+
+This enhancement addresses the real-world scenario where popular books remain bestsellers across multiple years.
