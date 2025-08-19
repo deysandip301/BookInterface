@@ -2,7 +2,9 @@ package com.BookInterface.repository;
 import com.BookInterface.model.Book;
 import java.util.List;
 import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.Comparator;
 
 public class InMemoryBookRepository implements IBookRepository {
 
@@ -46,6 +48,33 @@ public class InMemoryBookRepository implements IBookRepository {
         return books.stream()
                 .filter(book -> book.getAuthor().equalsIgnoreCase(authorName))
                 .map(book -> String.format("'%s': $%d", book.getTitle(), book.getPrice()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getUniqueBookTitlesByAuthor(String authorName) {
+        return books.stream()
+                .filter(book -> book.getAuthor().equalsIgnoreCase(authorName))
+                .collect(Collectors.groupingBy(Book::getTitle))
+                .keySet()
+                .stream()
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Book> getUniqueBooksByRating(double rating) {
+        return books.stream()
+                .filter(book -> book.getUserRating() == rating)
+                .collect(Collectors.groupingBy(
+                    book -> book.getTitle() + "|" + book.getAuthor(),
+                    Collectors.maxBy(Comparator.comparing(Book::getYear))
+                ))
+                .values()
+                .stream()
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .sorted(Comparator.comparing(Book::getTitle))
                 .collect(Collectors.toList());
     }
 }

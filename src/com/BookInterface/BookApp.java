@@ -39,6 +39,12 @@ public class BookApp {
                 case 5:
                     handleGetBookPricesByAuthor();
                     break;
+                case 6:
+                    handleGetUniqueBookTitlesByAuthor();
+                    break;
+                case 7:
+                    handleGetUniqueBooksByRating();
+                    break;
                 case 0:
                     System.out.println("Exiting application... Goodbye!");
                     scanner.close();
@@ -88,6 +94,23 @@ public class BookApp {
         prices.forEach(System.out::println);
     }
 
+    private void handleGetUniqueBookTitlesByAuthor() {
+        System.out.print("Enter author name: ");
+        String author = scanner.nextLine();
+        List<String> titles = repository.getUniqueBookTitlesByAuthor(author);
+        System.out.println("--- Unique Books by " + author + " (no duplicates from different years) ---");
+        titles.forEach(System.out::println);
+    }
+
+    private void handleGetUniqueBooksByRating() {
+        System.out.print("Enter user rating (e.g., 4.7): ");
+        double rating = scanner.nextDouble();
+        scanner.nextLine();
+        List<Book> books = repository.getUniqueBooksByRating(rating);
+        System.out.println("--- Unique Books with rating " + rating + " (no duplicates from different years) ---");
+        books.forEach(System.out::println);
+    }
+
     private void printMenu() {
         System.out.println("Select an option:");
         System.out.println("1. Get total number of books by an author");
@@ -95,6 +118,8 @@ public class BookApp {
         System.out.println("3. List all books by an author");
         System.out.println("4. List all books with a specific rating");
         System.out.println("5. List names and prices of books by an author");
+        System.out.println("6. List unique book titles by an author (no duplicates from different years)");
+        System.out.println("7. List unique books with a specific rating (no duplicates from different years)");
         System.out.println("0. Exit");
         System.out.print("Your choice: ");
     }

@@ -10,4 +10,6 @@ public interface IBookRepository {
     List<String> getBookTitlesByAuthor(String authorName);
     List<Book> getBooksByRating(double rating);
     List<String> getBookPricesByAuthor(String authorName);
+    List<String> getUniqueBookTitlesByAuthor(String authorName);
+    List<Book> getUniqueBooksByRating(double rating);
 }
